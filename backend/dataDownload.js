@@ -1,84 +1,48 @@
-require('dotenv').config();
+import {} from 'dotenv/config'
+import axios from 'axios';
 
-const axios = require('axios');
+const apiKey = process.env.API_KEY;
 
-const apiKey = process.env.API_KEY
+export async function getRealTimeFlightData() {
 
-function getRealTimeFlightData() {
+    const res = await axios.get('https://airlabs.co/api/v9/flights?api_key=' + apiKey)
+        .then(response => response.data.response)
+        .catch(error => error)
 
-    axios.get('https://airlabs.co/api/v9/flights?api_key=' + apiKey)
-        .then(response => {
-            return response.data.response;
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    return res;
 }
 
-function getAirlinesData() {
+export async function getAirlinesData() {
 
-    axios.get('https://airlabs.co/api/v9/airlines?api_key=' + apiKey)
-        .then(response => {
-            return response.data.response;
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    const res = await axios.get('https://airlabs.co/api/v9/airlines?api_key=' + apiKey)
+        .then(response => response.data.response)
+        .catch(error => error)
+
+    return res;
 }
 
-function getAirportsData() {
+export async function getAirportsData() {
 
-    axios.get('https://airlabs.co/api/v9/airports?api_key=' + apiKey)
-        .then(response => {
-            return response.data.response;
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    const res = await axios.get('https://airlabs.co/api/v9/airports?api_key=' + apiKey)
+        .then(response => response.data.response)
+        .catch(error => error)
+
+    return res;
 }
 
-function getCitiesData() {
+export async function getCitiesData() {
 
-    axios.get('https://airlabs.co/api/v9/cities?api_key=' + apiKey)
-        .then(response => {
-            return response.data.response;
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    const res = await axios.get('https://airlabs.co/api/v9/cities?api_key=' + apiKey)
+        .then(response => response.data.response)
+        .catch(error => error)
+
+    return res;
 }
 
-function getAirlineFleetsData() {
+export async function getCountriesData() {
+    const res = await axios.get('https://airlabs.co/api/v9/countries?api_key=' + apiKey)
+        .then(response => response.data.response)
+        .catch(error => error)
 
-    axios.get('https://airlabs.co/api/v9/fleets?api_key=' + apiKey)
-        .then(response => {
-            return response.data.response;
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    return res;
 }
-
-function getCountriesData() {
-
-    axios.get('https://airlabs.co/api/v9/countries?api_key=' + apiKey)
-        .then(response => {
-            return response.data.response;
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}
-
-function getTimezoneData() {
-
-    axios.get('https://airlabs.co/api/v9/timezones?api_key=' + apiKey)
-        .then(response => {
-            return response.data.response;
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}
-
-module.exports = { getRealTimeFlightData, getAirlinesData, getAirportsData, getCitiesData, getAirlineFleetsData, getCountriesData, getTimezoneData};
