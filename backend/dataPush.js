@@ -46,11 +46,13 @@ async function tableCreation() {
 
 async function dataInsert() {
 
+    console.log('getting airlines');
     const airlines = await getAirlinesData();
+    console.log(`got ${airlines.length} airlines`);
     var airline_icao = [];
     let k = 0;
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < airlines.length; i++) {
 
         if (airlines[i].icao_code && !airline_icao.includes(airlines[i].icao_code)) {
 
@@ -62,6 +64,7 @@ async function dataInsert() {
         }
     }
 
+    console.log('getting countries');
     const countries = await getCountriesData();
 
     for (let i = 0; i < countries.length; i++) {
@@ -72,11 +75,12 @@ async function dataInsert() {
         );
     }
 
+    console.log('getting airports');
     const airports = await getAirportsData();
     var airports_icao = [];
     k = 0;
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < airports.length; i++) {
 
         if (airports[i].icao_code && !airports_icao.includes(airports[i].icao_code)) {
 
@@ -88,18 +92,20 @@ async function dataInsert() {
         }
     }
 
+    console.log('getting cities');
     const cities = await getCitiesData();
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < cities.length; i++) {
         const citiesResponse = await pool.query(
             `insert into cities (city_code, name, lat, lng, country_code) values(?, ?, ?, ?, ?)`,
             [cities[i].city_code, cities[i].name, cities[i].lat, cities[i].lng, cities[i].country_code]
         );
     }
 
+    console.log('getting realtime flights');
     const rData = await getRealTimeFlightData();
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < rData.length; i++) {
         if (airline_icao.includes(rData[i].airline_icao) && airports_icao.includes(rData[i].dep_icao) && airports_icao.includes(rData[i].arr_icao)) {
             
             const realTimeFlightDataResponse = await pool.query(
