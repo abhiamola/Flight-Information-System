@@ -1,6 +1,6 @@
 export class Airport {
     constructor(iataCode, icaoCode, name, latitude, longitude, countryName) {
-        if (!iataCode || !icaoCode || !name || !latitude || !longitude || !countryName) {
+        if (!iataCode && !icaoCode && !name && !latitude && !longitude && !countryName) {
             throw new Error("Airport constructor cannot be empty!")
         }
 

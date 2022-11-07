@@ -44,6 +44,37 @@ export class DataGateway {
             .then(res => { return res[0] })
     }
 
+    getFlightForId(id) {
+        return this.#getConnection()
+            .then(conn => conn.query({sql: `SELECT * from realTimeFlightData as r inner join airlines a on r.airline_icao = a.icao_code
+                                                                             inner join airports arrival on r.arr_icao = arrival.icao_code
+                                                                             inner join airports departure on r.dep_icao = departure.icao_code
+                                                                             inner join countries cArr on arrival.country_code = cArr.code
+                                                                             inner join countries cDep on departure.country_code = cDep.code WHERE r.hex = '${id}'`, nestTables: '_'}))
+            .then(res => { return res[0] })
+    }
+
+    getFlightsForAirport(airport) {
+        return this.#getConnection()
+            .then(conn => conn.query({sql: `SELECT * from realTimeFlightData as r inner join airlines a on r.airline_icao = a.icao_code
+                                                                             inner join airports arrival on r.arr_icao = arrival.icao_code
+                                                                             inner join airports departure on r.dep_icao = departure.icao_code
+                                                                             inner join countries cArr on arrival.country_code = cArr.code
+                                                                             inner join countries cDep on departure.country_code = cDep.code
+                                                                             WHERE r.dep_icao = '${airport}' or r.arr_icao = '${airport}'`, nestTables: '_'}))
+            .then(res => { return res[0] })
+    }
+
+    // =============
+    // AIRPORTS CODE
+    // =============
+
+    getAirportsForCountry(countryCode) {
+        return this.#getConnection()
+            .then(conn => conn.query({sql: `SELECT * FROM airports AS a INNER JOIN countries c on a.country_code = c.code WHERE a.country_code = '${countryCode}'`, nestTables: '_'}))
+            .then(res => { return res[0] })
+    }
+
     async #getConnection() { 
         if (!this.#connection) {
             this.#connection = await mysql2.createConnection(this.#connectionParams)

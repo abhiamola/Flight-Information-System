@@ -14,7 +14,7 @@ export class FlightMapper extends DataMapper {
     }
 
     getByID(id) {
-        // TODO: get flight by id.
+        return this.tdg.getFlightForId(id).then(res => res.map(r => this.#parseJoinRow(r))).then(res => res[0])
     }
 
     getByDepAirport(airportID) {
@@ -30,7 +30,7 @@ export class FlightMapper extends DataMapper {
     }
 
     getByAirport(airportId) {
-        // TODO: get flights arriving or leaving from airport.
+        return this.tdg.getFlightsForAirport(airportId).then(res => res.map(r => this.#parseJoinRow(r)))
     }
 
     #parseJoinRow(row) {
