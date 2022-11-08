@@ -6,7 +6,7 @@ const dbUser = process.env.DB_USER;
 const dbPass = process.env.DB_PASS;
 
 const app = express()
-const port = 3000
+const port = 8080
 
 const dbManager = DBManager.getDBManager({
     host: '127.0.0.1',
@@ -18,6 +18,13 @@ const dbManager = DBManager.getDBManager({
 const airlineMapper = dbManager.airlineMapper;
 const flightMapper = dbManager.flightMapper;
 const airportMapper = dbManager.airportMapper;
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from ; Origin, X-Requested-With, Content-Type, Accept
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+  });
+
 
 // can be localhost:3000/airlines or localhost:3000/airlines?offset=100
 // returns 100 airline objects starting at the given offset (or from beginning)
