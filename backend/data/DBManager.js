@@ -3,7 +3,6 @@ import { AirportMapper } from './airportMapper.js';
 import { CityMapper } from './cityMapper.js';
 import { CountryMapper } from './countryMapper.js';
 import { FlightMapper } from './flightMapper.js';
-import { DataGateway } from './gateway.js';
 
 export class DBManager {
     static #instance;
@@ -15,13 +14,13 @@ export class DBManager {
     countryMapper;
     flightMapper;
     
-    constructor(dbConnectionParams) {
-        if (DBManager._instance) {
+    constructor(tdg) {
+        if (DBManager.#instance) {
             throw new Error("DBManager can only be instantiated once!")
         }
 
         DBManager.#instance = this;
-        this.#tdg = new DataGateway(dbConnectionParams);
+        this.#tdg = tdg
         
         this.airlineMapper = new AirlineMapper(this.#tdg);
         this.airportMapper = new AirportMapper(this.#tdg);
@@ -30,9 +29,9 @@ export class DBManager {
         this.flightMapper = new FlightMapper(this.#tdg);
     }
 
-    static getDBManager(initialParams) {
-        if (!DBManager._instance) {
-            return new DBManager(initialParams);
+    static getDBManager(tdg) {
+        if (!DBManager.#instance) {
+            return new DBManager(tdg);
         } else {
             throw new Error("DBManager is already instantiated")
         }

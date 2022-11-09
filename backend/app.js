@@ -1,6 +1,7 @@
 import {} from 'dotenv/config'
 import express from "express";
 import {DBManager} from "./data/DBManager.js";
+import {DataGateway} from "./data/gateway.js";
 
 const dbUser = process.env.DB_USER;
 const dbPass = process.env.DB_PASS;
@@ -8,12 +9,12 @@ const dbPass = process.env.DB_PASS;
 const app = express()
 const port = 8080
 
-const dbManager = DBManager.getDBManager({
+const dbManager = DBManager.getDBManager(new DataGateway({
     host: '127.0.0.1',
     user: dbUser,
     password: dbPass,
     database: 'flights_db'
-})
+}))
 
 const airlineMapper = dbManager.airlineMapper;
 const flightMapper = dbManager.flightMapper;

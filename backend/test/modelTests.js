@@ -1,6 +1,8 @@
 import {Airline} from "../models/airline.js";
 import {Airport} from "../models/airport.js";
 
+import should from "should";
+
 describe('Models', function () {
 
   describe('airline', function () {
