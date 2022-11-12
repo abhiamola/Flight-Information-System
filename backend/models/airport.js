@@ -10,10 +10,6 @@ export class Airport {
         this.latitude = latitude;
         this.longitude = longitude;
         this.countryName = countryName;
-        this.flights = [];
     }
 
-    addFlight(flight) {
-        this.flights.push(flight);
-    }
 }

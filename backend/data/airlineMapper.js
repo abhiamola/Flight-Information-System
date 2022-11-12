@@ -9,8 +9,8 @@ export class AirlineMapper extends DataMapper {
         // TODO: get by id
     }
 
-    async getAllWithOffset(offset) {
-        return (await this.tdg.getAirlines(offset).then(rows => rows.map(r => this.#parseRow(r))))
+    async getAllWithOffset(offset, limit) {
+        return (await this.tdg.getAirlines(offset, limit).then(rows => rows.map(r => this.#parseRow(r))))
     }
 
     #parseRow(row) {

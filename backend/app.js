@@ -1,7 +1,7 @@
-import {} from 'dotenv/config'
+import { } from 'dotenv/config'
 import express from "express";
-import {DBManager} from "./data/DBManager.js";
-import {DataGateway} from "./data/gateway.js";
+import { DBManager } from "./data/DBManager.js";
+import { DataGateway } from "./data/gateway.js";
 
 const dbUser = process.env.DB_USER;
 const dbPass = process.env.DB_PASS;
@@ -20,19 +20,22 @@ const airlineMapper = dbManager.airlineMapper;
 const flightMapper = dbManager.flightMapper;
 const airportMapper = dbManager.airportMapper;
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from ; Origin, X-Requested-With, Content-Type, Accept
     res.header("Access-Control-Allow-Headers", "*");
     next();
-  });
+});
 
 
 // can be localhost:3000/airlines or localhost:3000/airlines?offset=100
 // returns 100 airline objects starting at the given offset (or from beginning)
 app.get('/airlines', async (req, res) => {
     const offset = req.query.offset;
-
-    const airlines = offset ? await airlineMapper.getAllWithOffset(offset) : await airlineMapper.getAllWithOffset(0)
+    let limit = 5;
+    if (req.query.limit)
+        limit = req.query.limit;
+    
+    const airlines = offset ? await airlineMapper.getAllWithOffset(offset, limit) : await airlineMapper.getAllWithOffset(0, limit)
     res.send(airlines)
 })
 
