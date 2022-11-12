@@ -14,8 +14,6 @@ describe('Models', function () {
       const airline = new Airline("name", "icao", "iata");
       airline.should.not.be.null();
 
-      airline.should.have.property('fleets').with.lengthOf(0)
-      airline.should.have.property('flights').with.lengthOf(0)
     })
   });
 
@@ -28,7 +26,6 @@ describe('Models', function () {
       const airport = new Airport('iata', 'icao', 'name', 123, 324, 'country');
       airport.should.not.be.null();
 
-      airport.should.have.property('flights').with.lengthOf(0);
     })
   });
 
