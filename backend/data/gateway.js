@@ -11,7 +11,7 @@ export class DataGateway {
     // COUNTRY CODE
     // ============
     getCountryById(id) {
-        return this.#getConnection().then(conn => conn.query(`SELECT * FROM countries WHERE code = ?`, [id]))
+        return this.#getDBConnection().then(conn => conn.query(`SELECT * FROM countries WHERE code = ?`, [id]))
             .then(res => res[0])
     }
 
@@ -20,12 +20,12 @@ export class DataGateway {
     // ===========
 
     getAirlines(offset, limit) {
-        return this.#getConnection().then(conn => conn.query(`SELECT * FROM airlines LIMIT ? OFFSET ?`, [parseInt(limit,10), parseInt(offset,10)]))
+        return this.#getDBConnection().then(conn => conn.query(`SELECT * FROM airlines LIMIT ? OFFSET ?`, [parseInt(limit,10), parseInt(offset,10)]))
             .then(res => res[0])
     }
 
     getAirlineByICAO(icao) {
-        return this.#getConnection().then(conn => conn.query(`SELECT * FROM airlines WHERE icao_code = ?`, [icao])) //${icao}
+        return this.#getDBConnection().then(conn => conn.query(`SELECT * FROM airlines WHERE icao_code = ?`, [icao])) //${icao}
             .then(res => res[0])
     }
 
@@ -35,7 +35,7 @@ export class DataGateway {
     // ============
 
     getFlights(offset = 0) {
-        return this.#getConnection()
+        return this.#getDBConnection()
             .then(conn => conn.query({sql: `SELECT * from realTimeFlightData as r inner join airlines a on r.airline_icao = a.icao_code
                                                                              inner join airports arrival on r.arr_icao = arrival.icao_code
                                                                              inner join airports departure on r.dep_icao = departure.icao_code
@@ -45,7 +45,7 @@ export class DataGateway {
     }
 
     getFlightForId(id) {
-        return this.#getConnection()
+        return this.#getDBConnection()
             .then(conn => conn.query({sql: `SELECT * from realTimeFlightData as r inner join airlines a on r.airline_icao = a.icao_code
                                                                              inner join airports arrival on r.arr_icao = arrival.icao_code
                                                                              inner join airports departure on r.dep_icao = departure.icao_code
@@ -55,7 +55,7 @@ export class DataGateway {
     }
 
     getFlightsForAirport(airport) {
-        return this.#getConnection()
+        return this.#getDBConnection()
             .then(conn => conn.query({sql: `SELECT * from realTimeFlightData as r inner join airlines a on r.airline_icao = a.icao_code
                                                                              inner join airports arrival on r.arr_icao = arrival.icao_code
                                                                              inner join airports departure on r.dep_icao = departure.icao_code
@@ -70,12 +70,12 @@ export class DataGateway {
     // =============
 
     getAirportsForCountry(countryCode) {
-        return this.#getConnection()
+        return this.#getDBConnection()
             .then(conn => conn.query({sql: `SELECT * FROM airports AS a INNER JOIN countries c on a.country_code = c.code WHERE a.country_code = ?`, nestTables: '_'}, [countryCode]))
             .then(res => { return res[0] })
     }
 
-    async #getConnection() { 
+    async #getDBConnection() {
         if (!this.#connection) {
             this.#connection = await mysql2.createConnection(this.#connectionParams)
         }

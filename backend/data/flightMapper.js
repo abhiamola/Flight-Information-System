@@ -13,7 +13,7 @@ export class FlightMapper extends DataMapper {
         return this.tdg.getFlights(offset).then(res => res.map(r => this.#parseJoinRow(r)))
     }
 
-    getByID(id) {
+    getById(id) {
         return this.tdg.getFlightForId(id).then(res => res.map(r => this.#parseJoinRow(r))).then(res => res[0])
     }
 

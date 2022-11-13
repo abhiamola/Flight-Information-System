@@ -26,7 +26,7 @@ describe('Data', function () {
         })
 
         it('Get flight with id', async () => {
-            const res = await flightMapper.getByID('0102AC');
+            const res = await flightMapper.getById('0102AC');
 
             res.airline.name.should.equal('Air France')
         })
