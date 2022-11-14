@@ -7,7 +7,6 @@ import { FlightMapper } from './flightMapper.js';
 export class DBManager {
     static #instance;
 
-    #tdg;
     airlineMapper;
     airportMapper;
     cityMapper;
@@ -20,20 +19,22 @@ export class DBManager {
         }
 
         DBManager.#instance = this;
-        this.#tdg = tdg
         
-        this.airlineMapper = new AirlineMapper(this.#tdg);
-        this.airportMapper = new AirportMapper(this.#tdg);
-        this.cityMapper = new CityMapper(this.#tdg);
-        this.countryMapper = new CountryMapper(this.#tdg);
-        this.flightMapper = new FlightMapper(this.#tdg);
+        this.airlineMapper = new AirlineMapper(tdg);
+        this.airportMapper = new AirportMapper(tdg);
+        this.cityMapper = new CityMapper(tdg);
+        this.countryMapper = new CountryMapper(tdg);
+        this.flightMapper = new FlightMapper(tdg);
     }
 
     static getDBManager(tdg) {
         if (!DBManager.#instance) {
             return new DBManager(tdg);
         } else {
-            throw new Error("DBManager is already instantiated")
+            if (tdg) // if retrieving instance, make sure we aren't using a new tdg
+                throw new Error("DBManager is already instantiated")
+
+            return this.#instance;
         }
     }
 }
