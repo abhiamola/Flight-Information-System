@@ -1,6 +1,5 @@
 import { AirlineMapper } from './airlineMapper.js';
 import { AirportMapper } from './airportMapper.js';
-import { CityMapper } from './cityMapper.js';
 import { CountryMapper } from './countryMapper.js';
 import { FlightMapper } from './flightMapper.js';
 
@@ -9,7 +8,6 @@ export class DBManager {
 
     airlineMapper;
     airportMapper;
-    cityMapper;
     countryMapper;
     flightMapper;
     
@@ -22,7 +20,6 @@ export class DBManager {
         
         this.airlineMapper = new AirlineMapper(tdg);
         this.airportMapper = new AirportMapper(tdg);
-        this.cityMapper = new CityMapper(tdg);
         this.countryMapper = new CountryMapper(tdg);
         this.flightMapper = new FlightMapper(tdg);
     }
