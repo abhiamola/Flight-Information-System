@@ -1,9 +1,4 @@
-# SOEN-6441-Project
-SOEN 6441 Fall Project 
-
-Abhishek Amola (40105405) and Peter Sakr (40237311)
-
-**Video Presentation**: https://drive.google.com/file/d/161ckSUDEpxpCOghg6AIMZ14tJxTKMR8A/view?usp=share_link
+# Flight Information System
 
 Steps to run the code
 
