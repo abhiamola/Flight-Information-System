@@ -1,6 +1,6 @@
 # Flight Information System
 
-Steps to run the code
+Steps to run the code.
 
 
 There are 2 directories in the code ‘backend’ and ‘frontend’. As the names suggest ‘backend’ directory has backend code and ‘frontend’ has the frontend code.
